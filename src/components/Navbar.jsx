@@ -30,13 +30,13 @@ export default function Navbar() {
         className="sticky top-0 z-40 backdrop-blur border-b"
         style={{ background: "color-mix(in srgb, var(--bg) 88%, transparent)", borderColor: "var(--line)" }}
       >
-        <nav className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
-          <Link to="/" className="flex flex-col leading-none">
-            <span className="font-display font-bold text-xl tracking-tight" style={{ color: "var(--fg)" }}>
-              K.S. <span style={{ color: "var(--accent)" }}>Elite Attorneys</span>
-            </span>
-            <span className="font-mono text-[10px] tracking-[0.25em] uppercase text-[var(--fg-muted)] mt-0.5">
-              Sharma &amp; Associates
+        <nav className="max-w-6xl mx-auto px-6 h-20 lg:h-24 flex items-center gap-10">
+          <Link to="/" className="flex items-center shrink-0" aria-label="K.S. Elite Attorneys — Home">
+            <span
+              className="flex items-center justify-center rounded-full overflow-hidden"
+              style={{ width: 76, height: 76, background: "var(--color-ivory)" }}
+            >
+              <img src="/images/logo.png" alt="K.S. Elite Attorneys" style={{ width: 76, height: 76 }} className="object-cover" />
             </span>
           </Link>
 
@@ -62,7 +62,7 @@ export default function Navbar() {
             ))}
           </div>
 
-          <div className="hidden lg:flex items-center gap-4">
+          <div className="hidden lg:flex items-center gap-4 ml-auto">
             <ThemeToggle />
             <a
               href={`tel:${PHONE_TEL}`}
@@ -74,7 +74,7 @@ export default function Navbar() {
             </a>
           </div>
 
-          <div className="flex lg:hidden items-center gap-3">
+          <div className="flex lg:hidden items-center gap-3 ml-auto">
             <ThemeToggle />
             <button
               onClick={() => setOpen(true)}
@@ -97,8 +97,11 @@ export default function Navbar() {
         }}
       >
         <div className="h-20 flex items-center justify-between px-6 border-b shrink-0" style={{ borderColor: "var(--line)" }}>
-          <span className="font-display font-bold text-xl" style={{ color: "var(--fg)" }}>
-            K.S. <span style={{ color: "var(--accent)" }}>Elite Attorneys</span>
+          <span
+            className="flex items-center justify-center rounded-full overflow-hidden"
+            style={{ width: 66, height: 66, background: "var(--color-ivory)" }}
+          >
+            <img src="/images/logo.png" alt="K.S. Elite Attorneys" style={{ width: 66, height: 66 }} className="object-cover" />
           </span>
           <button onClick={() => setOpen(false)} aria-label="Close menu" className="p-2 -mr-2" style={{ color: "var(--fg)" }}>
             <X size={26} />
