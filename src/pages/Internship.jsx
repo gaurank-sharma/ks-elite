@@ -1,0 +1,149 @@
+import { useState } from "react";
+import { BookOpen, Laptop, Send, Users } from "lucide-react";
+import Layout from "../components/Layout";
+import PageHeader from "../components/PageHeader";
+import Reveal from "../components/Reveal";
+
+const WHATSAPP_NUMBER = "919891967200";
+
+const PERKS = [
+  { icon: BookOpen, title: "Real Casework", desc: "Assist on live matters before the Delhi High Court and subordinate courts." },
+  { icon: Users, title: "Direct Mentorship", desc: "Work alongside advocates with 6–30 years of courtroom experience." },
+  { icon: Laptop, title: "Online or Offline", desc: "Flexible internship mode to fit your college schedule." },
+];
+
+const initialForm = {
+  firstName: "",
+  surname: "",
+  preferredName: "",
+  college: "",
+  email: "",
+  contact: "",
+  gender: "",
+  mode: "Offline",
+  dob: "",
+  month: "",
+};
+
+export default function Internship() {
+  const [form, setForm] = useState(initialForm);
+
+  const update = (key) => (e) => setForm((f) => ({ ...f, [key]: e.target.value }));
+
+  const submit = (e) => {
+    e.preventDefault();
+    const lines = [
+      "New internship application via website:",
+      "",
+      `Name: ${form.firstName} ${form.surname} (${form.preferredName || "—"})`,
+      `College: ${form.college}`,
+      `Email: ${form.email}`,
+      `Contact: ${form.contact}`,
+      `Gender: ${form.gender}`,
+      `Mode: ${form.mode}`,
+      `DOB: ${form.dob}`,
+      `Preferred month: ${form.month}`,
+      "",
+      "(Please share your CV as a PDF in this chat.)",
+    ].join("\n");
+    window.open(`https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(lines)}`, "_blank", "noopener");
+  };
+
+  const inputClass =
+    "rounded-xl border px-4 py-3 text-sm outline-none focus:border-[var(--accent)] w-full";
+  const inputStyle = { borderColor: "var(--line)", background: "var(--card)" };
+
+  return (
+    <Layout>
+      <PageHeader
+        kicker="Join Us"
+        title="Internship Program"
+        note="Work on real matters, learn directly from practicing advocates, and get hands-on courtroom exposure."
+      />
+
+      <section className="py-24 sm:py-32 px-6">
+        <div className="max-w-6xl mx-auto grid lg:grid-cols-[1fr_1.2fr] gap-14">
+          <Reveal>
+            <span className="font-mono text-xs tracking-[0.3em] uppercase text-[var(--fg-muted)]">
+              Why Intern With Us
+            </span>
+            <h2 className="font-display font-bold uppercase leading-[1.02] text-[clamp(1.8rem,4vw,2.6rem)] mt-2">
+              Learn where the work happens.
+            </h2>
+            <div className="mt-8 flex flex-col gap-5">
+              {PERKS.map(({ icon: Icon, title, desc }) => (
+                <div key={title} className="flex items-start gap-3">
+                  <div
+                    className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0"
+                    style={{ background: "color-mix(in srgb, var(--accent) 15%, transparent)" }}
+                  >
+                    <Icon size={18} style={{ color: "var(--accent)" }} />
+                  </div>
+                  <div>
+                    <h3 className="font-display font-bold text-base">{title}</h3>
+                    <p className="text-[var(--fg-muted)] text-sm mt-0.5">{desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </Reveal>
+
+          <Reveal delay={0.1}>
+            <form
+              onSubmit={submit}
+              className="hover-pop rounded-2xl border p-7 sm:p-9 flex flex-col gap-4"
+              style={{ borderColor: "var(--line)", background: "var(--card)" }}
+            >
+              <h2 className="font-display font-bold text-xl mb-1">Application Form</h2>
+
+              <div className="grid sm:grid-cols-2 gap-4">
+                <input required placeholder="First name" value={form.firstName} onChange={update("firstName")} className={inputClass} style={inputStyle} />
+                <input required placeholder="Surname" value={form.surname} onChange={update("surname")} className={inputClass} style={inputStyle} />
+              </div>
+
+              <input placeholder="Preferred name (optional)" value={form.preferredName} onChange={update("preferredName")} className={inputClass} style={inputStyle} />
+
+              <input required placeholder="College / University" value={form.college} onChange={update("college")} className={inputClass} style={inputStyle} />
+
+              <div className="grid sm:grid-cols-2 gap-4">
+                <input required type="email" placeholder="Email" value={form.email} onChange={update("email")} className={inputClass} style={inputStyle} />
+                <input required type="tel" placeholder="Contact number" value={form.contact} onChange={update("contact")} className={inputClass} style={inputStyle} />
+              </div>
+
+              <div className="grid sm:grid-cols-3 gap-4">
+                <select required value={form.gender} onChange={update("gender")} className={inputClass} style={inputStyle}>
+                  <option value="" disabled>
+                    Gender
+                  </option>
+                  <option>Female</option>
+                  <option>Male</option>
+                  <option>Other</option>
+                  <option>Prefer not to say</option>
+                </select>
+                <select value={form.mode} onChange={update("mode")} className={inputClass} style={inputStyle}>
+                  <option>Offline</option>
+                  <option>Online</option>
+                </select>
+                <input required type="date" value={form.dob} onChange={update("dob")} className={inputClass} style={inputStyle} />
+              </div>
+
+              <input required placeholder="Preferred internship month (e.g. June 2026)" value={form.month} onChange={update("month")} className={inputClass} style={inputStyle} />
+
+              <button
+                type="submit"
+                className="flex items-center justify-center gap-2 font-display font-semibold text-sm rounded-full px-7 py-3.5 mt-2"
+                style={{ background: "var(--accent)", color: "var(--color-navy)" }}
+              >
+                <Send size={16} strokeWidth={2.4} />
+                Submit via WhatsApp
+              </button>
+              <p className="text-xs text-[var(--fg-muted)]">
+                This opens WhatsApp with your details pre-filled — please attach your CV as a PDF in the chat.
+              </p>
+            </form>
+          </Reveal>
+        </div>
+      </section>
+    </Layout>
+  );
+}
