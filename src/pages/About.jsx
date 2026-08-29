@@ -38,7 +38,7 @@ export default function About() {
         <div className="max-w-6xl mx-auto grid lg:grid-cols-[0.85fr_1.15fr] gap-14 items-center">
           <Reveal className="relative mx-auto lg:mx-0 w-64 sm:w-80">
             <div className="relative aspect-[4/5] rounded-3xl overflow-hidden border" style={{ borderColor: "var(--line)" }}>
-              <img src="/images/founder.jpg" alt="Founder, K.S. Elite Attorneys" className="absolute inset-0 h-full w-full object-cover" />
+              <img src="/images/founder.png" alt="Founder, K.S. Elite Attorneys" className="absolute inset-0 h-full w-full object-cover" />
               <div
                 className="absolute inset-0"
                 style={{ background: "linear-gradient(160deg, rgba(6,10,19,0.1) 0%, rgba(6,10,19,0.5) 100%)" }}
