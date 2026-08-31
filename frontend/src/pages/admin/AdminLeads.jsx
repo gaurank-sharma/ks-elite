@@ -56,7 +56,7 @@ export default function AdminLeads() {
     <div>
       <h1 className="font-display font-bold text-2xl mb-6">Leads</h1>
 
-      <div className="flex gap-2 mb-6">
+      <div className="flex flex-wrap gap-2 mb-6">
         {TABS.map((t) => (
           <button
             key={t.key}
