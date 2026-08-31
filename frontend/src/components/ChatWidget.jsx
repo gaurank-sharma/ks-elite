@@ -7,6 +7,24 @@ const GREETING = {
   content: "Hi, I'm the K.S. Elite Attorneys assistant. Ask me about our practice areas or offices — or tell me your name and phone number and I'll book you a consultation right here.",
 };
 
+// Safety net: the model is told not to use markdown, but if it slips (e.g. **bold**),
+// render it properly instead of showing literal asterisks. No dangerouslySetInnerHTML —
+// this builds plain React nodes, so there's no HTML-injection surface.
+function renderMessage(content) {
+  return content.split("\n").map((line, li, lines) => (
+    <span key={li}>
+      {line.split(/(\*\*[^*]+\*\*)/g).map((part, pi) =>
+        part.startsWith("**") && part.endsWith("**") && part.length > 4 ? (
+          <strong key={pi}>{part.slice(2, -2)}</strong>
+        ) : (
+          part
+        )
+      )}
+      {li < lines.length - 1 && <br />}
+    </span>
+  ));
+}
+
 export default function ChatWidget() {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState([GREETING]);
@@ -72,7 +90,7 @@ export default function ChatWidget() {
                     : { alignSelf: "flex-start", background: "var(--bg)", border: "1px solid var(--line)" }
                 }
               >
-                {m.content}
+                {renderMessage(m.content)}
               </div>
             ))}
             {sending && (
