@@ -40,6 +40,7 @@ export default function Attorneys() {
         kicker="Our Team"
         title="Attorneys"
         note="Meticulous preparation, legal precision, and a results-driven mindset — across every matter, every court."
+        image="/images/practice-areas/criminal-law.jpg"
       />
 
       <section className="py-24 sm:py-32 px-6">
@@ -64,11 +65,11 @@ export default function Attorneys() {
                   {p.title}
                 </p>
 
-                <div className="flex items-center gap-4 mt-3 font-mono text-[11px] uppercase tracking-wide text-[var(--fg-muted)]">
+                <div className="flex flex-col gap-1.5 mt-3 font-mono text-[11px] uppercase tracking-wide text-[var(--fg-muted)]">
                   <span>{p.exp} exp.</span>
-                  <span className="flex items-center gap-1">
-                    <GraduationCap size={13} />
-                    {p.education}
+                  <span className="flex items-start gap-1.5">
+                    <GraduationCap size={13} className="mt-0.5 shrink-0" />
+                    <span className="leading-relaxed">{p.education}</span>
                   </span>
                 </div>
 

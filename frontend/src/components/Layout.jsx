@@ -3,6 +3,7 @@ import DisclaimerGate from "./DisclaimerGate";
 import TrustMarquee from "./TrustMarquee";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import ChatWidget from "./ChatWidget";
 
 export default function Layout({ children }) {
   return (
@@ -14,6 +15,7 @@ export default function Layout({ children }) {
       <Navbar />
       <main>{children}</main>
       <Footer />
+      <ChatWidget />
     </>
   );
 }

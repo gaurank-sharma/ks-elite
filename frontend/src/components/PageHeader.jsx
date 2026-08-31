@@ -1,8 +1,20 @@
 import SplitReveal from "./SplitReveal";
 
-export default function PageHeader({ kicker, title, note }) {
+export default function PageHeader({ kicker, title, note, image }) {
   return (
     <section className="relative pt-36 pb-16 sm:pt-44 sm:pb-20 px-6 overflow-hidden" style={{ background: "var(--color-navy)" }}>
+      {image && (
+        <div className="absolute inset-0">
+          <img src={image} alt="" className="absolute inset-0 h-full w-full object-cover" />
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(180deg, rgba(6,10,19,0.90) 0%, rgba(6,10,19,0.86) 55%, rgba(6,10,19,0.96) 100%)",
+            }}
+          />
+        </div>
+      )}
       <div
         className="absolute -top-32 -right-32 w-96 h-96 rounded-full pointer-events-none"
         style={{ background: "radial-gradient(circle, color-mix(in srgb, var(--color-gold) 18%, transparent), transparent 70%)" }}

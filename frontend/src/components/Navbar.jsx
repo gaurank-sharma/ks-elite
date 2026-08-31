@@ -36,7 +36,7 @@ export default function Navbar() {
               className="flex items-center justify-center rounded-full overflow-hidden"
               style={{ width: 76, height: 76, background: "var(--color-ivory)" }}
             >
-              <img src="/images/logo.png" alt="K.S. Elite Attorneys" style={{ width: 76, height: 76 }} className="object-cover" />
+              <img src="/images/logo-mark.png" alt="K.S. Elite Attorneys" style={{ width: 76, height: 76 }} className="object-cover" />
             </span>
           </Link>
 
@@ -101,7 +101,7 @@ export default function Navbar() {
             className="flex items-center justify-center rounded-full overflow-hidden"
             style={{ width: 66, height: 66, background: "var(--color-ivory)" }}
           >
-            <img src="/images/logo.png" alt="K.S. Elite Attorneys" style={{ width: 66, height: 66 }} className="object-cover" />
+            <img src="/images/logo-mark.png" alt="K.S. Elite Attorneys" style={{ width: 66, height: 66 }} className="object-cover" />
           </span>
           <button onClick={() => setOpen(false)} aria-label="Close menu" className="p-2 -mr-2" style={{ color: "var(--fg)" }}>
             <X size={26} />

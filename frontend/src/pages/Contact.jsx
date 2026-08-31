@@ -3,6 +3,7 @@ import { Clock, Mail, MapPin, MessageCircle, Phone, Send } from "lucide-react";
 import Layout from "../components/Layout";
 import PageHeader from "../components/PageHeader";
 import Reveal from "../components/Reveal";
+import { submitLead } from "../lib/api";
 
 const OFFICES = [
   "45/1109, 1st Floor, DDA Flats, Kalkaji, Delhi-110019",
@@ -22,6 +23,7 @@ export default function Contact() {
 
   const submit = (e) => {
     e.preventDefault();
+    submitLead("contact", form);
     const text = `New consultation request via website:%0A%0AName: ${encodeURIComponent(form.name)}%0APhone: ${encodeURIComponent(
       form.phone
     )}%0AMatter: ${encodeURIComponent(form.matter)}%0AMessage: ${encodeURIComponent(form.message)}`;
@@ -34,6 +36,7 @@ export default function Contact() {
         kicker="Let's Talk"
         title="Speak with an advocate today."
         note="Consultations available 24/7. Reach out by phone, WhatsApp, or the form below — or visit us at any of our three Delhi offices."
+        image="/images/practice-areas/adr.jpg"
       />
 
       <section className="py-24 sm:py-32 px-6">

@@ -3,3 +3,6 @@ dist
 dist-ssr
 *.local
 .DS_Store
+
+# separate repo/deployment (server/gaurank-sharma/ks-elite-backend) — never track here
+/server

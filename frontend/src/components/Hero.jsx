@@ -40,6 +40,21 @@ export default function Hero() {
 
   return (
     <section className="relative pt-40 pb-24 sm:pt-48 sm:pb-32 px-6 overflow-hidden" style={{ background: "var(--color-navy)" }}>
+      <div className="absolute inset-0">
+        <img
+          src="/images/blog/courts.jpg"
+          alt=""
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(180deg, rgba(6,10,19,0.90) 0%, rgba(6,10,19,0.84) 45%, rgba(6,10,19,0.96) 100%)",
+          }}
+        />
+      </div>
+
       <div
         className="absolute -top-40 -right-40 w-[520px] h-[520px] rounded-full pointer-events-none"
         style={{ background: "radial-gradient(circle, color-mix(in srgb, var(--color-gold) 20%, transparent), transparent 70%)" }}

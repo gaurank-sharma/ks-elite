@@ -3,6 +3,7 @@ import { BookOpen, Laptop, Send, Users } from "lucide-react";
 import Layout from "../components/Layout";
 import PageHeader from "../components/PageHeader";
 import Reveal from "../components/Reveal";
+import { submitLead } from "../lib/api";
 
 const WHATSAPP_NUMBER = "919891967200";
 
@@ -32,6 +33,7 @@ export default function Internship() {
 
   const submit = (e) => {
     e.preventDefault();
+    submitLead("internship", form);
     const lines = [
       "New internship application via website:",
       "",
@@ -59,6 +61,7 @@ export default function Internship() {
         kicker="Join Us"
         title="Internship Program"
         note="Work on real matters, learn directly from practicing advocates, and get hands-on courtroom exposure."
+        image="/images/practice-areas/insurance-law.jpg"
       />
 
       <section className="py-24 sm:py-32 px-6">

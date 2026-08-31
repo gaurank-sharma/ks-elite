@@ -32,6 +32,7 @@ export default function About() {
         kicker="Our Story"
         title="About K.S. Elite Attorneys"
         note="A premier litigation firm headquartered in Delhi, built on 24+ years of courtroom experience and a client-first philosophy."
+        image="/images/practice-areas/business-law.jpg"
       />
 
       <section className="py-24 sm:py-32 px-6">

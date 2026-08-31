@@ -1,5 +1,5 @@
 import { lazy, Suspense, useState } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ThemeProvider } from "./lib/ThemeContext";
 import { SmoothScrollProvider } from "./lib/SmoothScroll";
 import ScrollToTop from "./components/ScrollToTop";
@@ -12,7 +12,15 @@ const PracticeAreas = lazy(() => import("./pages/PracticeAreas"));
 const Attorneys = lazy(() => import("./pages/Attorneys"));
 const Internship = lazy(() => import("./pages/Internship"));
 const Blog = lazy(() => import("./pages/Blog"));
+const BlogPost = lazy(() => import("./pages/BlogPost"));
 const Contact = lazy(() => import("./pages/Contact"));
+
+const AdminLogin = lazy(() => import("./pages/admin/AdminLogin"));
+const AdminGuard = lazy(() => import("./pages/admin/AdminGuard"));
+const AdminLayout = lazy(() => import("./pages/admin/AdminLayout"));
+const AdminLeads = lazy(() => import("./pages/admin/AdminLeads"));
+const AdminPosts = lazy(() => import("./pages/admin/AdminPosts"));
+const AdminPostEditor = lazy(() => import("./pages/admin/AdminPostEditor"));
 
 export default function App() {
   const [showIntro, setShowIntro] = useState(true);
@@ -31,7 +39,24 @@ export default function App() {
               <Route path="/attorneys" element={<Attorneys />} />
               <Route path="/internship" element={<Internship />} />
               <Route path="/blog" element={<Blog />} />
+              <Route path="/blog/:slug" element={<BlogPost />} />
               <Route path="/contact" element={<Contact />} />
+
+              <Route path="/admin/login" element={<AdminLogin />} />
+              <Route
+                path="/admin"
+                element={
+                  <AdminGuard>
+                    <AdminLayout />
+                  </AdminGuard>
+                }
+              >
+                <Route index element={<Navigate to="leads" replace />} />
+                <Route path="leads" element={<AdminLeads />} />
+                <Route path="posts" element={<AdminPosts />} />
+                <Route path="posts/new" element={<AdminPostEditor />} />
+                <Route path="posts/:id/edit" element={<AdminPostEditor />} />
+              </Route>
             </Routes>
           </Suspense>
         </SmoothScrollProvider>

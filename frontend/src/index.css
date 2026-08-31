@@ -3,9 +3,9 @@
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 @theme {
-  --font-display: "Fraunces", "Georgia", serif;
+  --font-display: "Playfair Display", "Georgia", serif;
   --font-body: "Inter", sans-serif;
-  --font-mono: "IBM Plex Mono", monospace;
+  --font-mono: "Inter", sans-serif;
 
   --color-navy: #0b1220;
   --color-navy-deep: #060a13;
@@ -213,6 +213,40 @@
   transform: translateY(-4px);
   border-color: var(--accent) !important;
   box-shadow: 0 14px 30px -14px color-mix(in srgb, var(--accent) 45%, transparent);
+}
+
+/* prose-blog — styles injected article HTML from the CMS (mammoth/AI-generated content) */
+.prose-blog h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.5rem;
+  margin: 2rem 0 0.75rem;
+}
+.prose-blog h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.2rem;
+  margin: 1.5rem 0 0.5rem;
+}
+.prose-blog p {
+  margin: 0 0 1rem;
+}
+.prose-blog ul,
+.prose-blog ol {
+  margin: 0 0 1rem;
+  padding-left: 1.4rem;
+}
+.prose-blog li {
+  margin-bottom: 0.4rem;
+}
+.prose-blog img {
+  max-width: 100%;
+  border-radius: 0.75rem;
+  margin: 1.5rem 0;
+}
+.prose-blog a {
+  color: var(--accent);
+  text-decoration: underline;
 }
 
 /* ornamental divider */

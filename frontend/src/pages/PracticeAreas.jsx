@@ -50,6 +50,7 @@ export default function PracticeAreas() {
         kicker="What We Do"
         title="Practice Areas"
         note="Seventeen areas of legal practice, handled with the same meticulous preparation and results-driven mindset — from a single cheque bounce notice to Supreme Court appeals."
+        image="/images/blog/technology.jpg"
       />
 
       {CATEGORIES.map((cat, ci) => (
