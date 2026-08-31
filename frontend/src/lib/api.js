@@ -17,6 +17,13 @@ export function submitLead(path, payload) {
   }).catch(() => {});
 }
 
+// Internship applications include an optional resume file, so this sends
+// multipart form data instead of JSON (submitLead's shape). Same best-effort
+// contract as submitLead — the WhatsApp flow is the real submission path.
+export function submitInternshipApplication(formData) {
+  fetch(`${API_BASE}/internship`, { method: "POST", body: formData }).catch(() => {});
+}
+
 export async function sendChatMessage(messages) {
   const res = await fetch(`${API_BASE}/chat`, {
     method: "POST",

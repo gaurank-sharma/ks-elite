@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { BookOpen, Laptop, Send, Users } from "lucide-react";
+import { BookOpen, Laptop, Paperclip, Send, Users } from "lucide-react";
 import Layout from "../components/Layout";
 import PageHeader from "../components/PageHeader";
 import Reveal from "../components/Reveal";
-import { submitLead } from "../lib/api";
+import { submitInternshipApplication } from "../lib/api";
 
 const WHATSAPP_NUMBER = "919891967200";
 
@@ -28,12 +28,31 @@ const initialForm = {
 
 export default function Internship() {
   const [form, setForm] = useState(initialForm);
+  const [resume, setResume] = useState(null);
+  const [resumeError, setResumeError] = useState("");
 
   const update = (key) => (e) => setForm((f) => ({ ...f, [key]: e.target.value }));
 
+  const handleResumeChange = (e) => {
+    const file = e.target.files?.[0] ?? null;
+    if (file && file.type !== "application/pdf") {
+      setResumeError("Please upload a PDF file.");
+      setResume(null);
+      e.target.value = "";
+      return;
+    }
+    setResumeError("");
+    setResume(file);
+  };
+
   const submit = (e) => {
     e.preventDefault();
-    submitLead("internship", form);
+
+    const formData = new FormData();
+    Object.entries(form).forEach(([key, value]) => formData.append(key, value));
+    if (resume) formData.append("resume", resume);
+    submitInternshipApplication(formData);
+
     const lines = [
       "New internship application via website:",
       "",
@@ -46,7 +65,7 @@ export default function Internship() {
       `DOB: ${form.dob}`,
       `Preferred month: ${form.month}`,
       "",
-      "(Please share your CV as a PDF in this chat.)",
+      resume ? `Resume attached via website: ${resume.name}` : "(Please share your CV as a PDF in this chat.)",
     ].join("\n");
     window.open(`https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(lines)}`, "_blank", "noopener");
   };
@@ -132,6 +151,18 @@ export default function Internship() {
 
               <input required placeholder="Preferred internship month (e.g. June 2026)" value={form.month} onChange={update("month")} className={inputClass} style={inputStyle} />
 
+              <label
+                className="flex items-center gap-3 rounded-xl border px-4 py-3 text-sm cursor-pointer"
+                style={inputStyle}
+              >
+                <Paperclip size={16} className="shrink-0 text-[var(--fg-muted)]" />
+                <span className={resume ? "" : "text-[var(--fg-muted)]"}>
+                  {resume ? resume.name : "Upload your resume (PDF, optional)"}
+                </span>
+                <input type="file" accept="application/pdf" onChange={handleResumeChange} className="hidden" />
+              </label>
+              {resumeError && <p className="text-xs text-red-500 -mt-2">{resumeError}</p>}
+
               <button
                 type="submit"
                 className="flex items-center justify-center gap-2 font-display font-semibold text-sm rounded-full px-7 py-3.5 mt-2"
@@ -141,7 +172,7 @@ export default function Internship() {
                 Submit via WhatsApp
               </button>
               <p className="text-xs text-[var(--fg-muted)]">
-                This opens WhatsApp with your details pre-filled — please attach your CV as a PDF in the chat.
+                This opens WhatsApp with your details pre-filled. If you didn't attach a resume above, please share your CV as a PDF in the chat.
               </p>
             </form>
           </Reveal>
