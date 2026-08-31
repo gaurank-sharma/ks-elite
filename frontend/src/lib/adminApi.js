@@ -67,6 +67,20 @@ export const createPost = (payload) => request("/posts/admin", { method: "POST",
 export const updatePost = (id, payload) => request(`/posts/admin/${id}`, { method: "PUT", body: JSON.stringify(payload) });
 export const deletePost = (id) => request(`/posts/admin/${id}`, { method: "DELETE" });
 
+// ── team ─────────────────────────────────────────────────────────────────
+export const getAllTeam = () => request("/team/admin/all");
+export const getTeamMember = (id) => request(`/team/admin/${id}`);
+export const createTeamMember = (payload) => request("/team/admin", { method: "POST", body: JSON.stringify(payload) });
+export const updateTeamMember = (id, payload) => request(`/team/admin/${id}`, { method: "PUT", body: JSON.stringify(payload) });
+export const deleteTeamMember = (id) => request(`/team/admin/${id}`, { method: "DELETE" });
+
+// ── testimonials ─────────────────────────────────────────────────────────
+export const getAllTestimonials = () => request("/testimonials/admin/all");
+export const getTestimonial = (id) => request(`/testimonials/admin/${id}`);
+export const createTestimonial = (payload) => request("/testimonials/admin", { method: "POST", body: JSON.stringify(payload) });
+export const updateTestimonial = (id, payload) => request(`/testimonials/admin/${id}`, { method: "PUT", body: JSON.stringify(payload) });
+export const deleteTestimonial = (id) => request(`/testimonials/admin/${id}`, { method: "DELETE" });
+
 // ── AI + document import ────────────────────────────────────────────────
 export const draftPost = (topic, notes) =>
   request("/admin/ai/draft", { method: "POST", body: JSON.stringify({ topic, notes }) });

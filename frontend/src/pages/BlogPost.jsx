@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { ArrowLeft, Calendar, Tag } from "lucide-react";
 import Layout from "../components/Layout";
 import Reveal from "../components/Reveal";
-import { fetchPostBySlug } from "../lib/api";
+import { fetchPostBySlug, resolveImageUrl } from "../lib/api";
 
 function formatDate(iso) {
   return new Date(iso).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
@@ -54,7 +54,7 @@ export default function BlogPost() {
 
               {post.heroImage && (
                 <div className="rounded-2xl overflow-hidden mb-10 border" style={{ borderColor: "var(--line)" }}>
-                  <img src={post.heroImage} alt={post.title} className="w-full h-auto" />
+                  <img src={resolveImageUrl(post.heroImage)} alt={post.title} className="w-full h-auto" />
                 </div>
               )}
 
@@ -64,7 +64,7 @@ export default function BlogPost() {
                     {section.text && <div dangerouslySetInnerHTML={{ __html: section.text }} />}
                     {section.image && (
                       <div className="rounded-xl overflow-hidden my-6 border" style={{ borderColor: "var(--line)" }}>
-                        <img src={section.image} alt="" className="w-full h-auto" />
+                        <img src={resolveImageUrl(section.image)} alt="" className="w-full h-auto" />
                       </div>
                     )}
                   </div>

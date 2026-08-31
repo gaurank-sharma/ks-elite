@@ -21,6 +21,10 @@ const AdminLayout = lazy(() => import("./pages/admin/AdminLayout"));
 const AdminLeads = lazy(() => import("./pages/admin/AdminLeads"));
 const AdminPosts = lazy(() => import("./pages/admin/AdminPosts"));
 const AdminPostEditor = lazy(() => import("./pages/admin/AdminPostEditor"));
+const AdminTeam = lazy(() => import("./pages/admin/AdminTeam"));
+const AdminTeamEditor = lazy(() => import("./pages/admin/AdminTeamEditor"));
+const AdminTestimonials = lazy(() => import("./pages/admin/AdminTestimonials"));
+const AdminTestimonialEditor = lazy(() => import("./pages/admin/AdminTestimonialEditor"));
 
 export default function App() {
   const [showIntro, setShowIntro] = useState(true);
@@ -56,6 +60,12 @@ export default function App() {
                 <Route path="posts" element={<AdminPosts />} />
                 <Route path="posts/new" element={<AdminPostEditor />} />
                 <Route path="posts/:id/edit" element={<AdminPostEditor />} />
+                <Route path="team" element={<AdminTeam />} />
+                <Route path="team/new" element={<AdminTeamEditor />} />
+                <Route path="team/:id/edit" element={<AdminTeamEditor />} />
+                <Route path="testimonials" element={<AdminTestimonials />} />
+                <Route path="testimonials/new" element={<AdminTestimonialEditor />} />
+                <Route path="testimonials/:id/edit" element={<AdminTestimonialEditor />} />
               </Route>
             </Routes>
           </Suspense>

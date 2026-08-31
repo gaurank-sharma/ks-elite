@@ -1,4 +1,11 @@
 export const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:4000/api";
+const API_ORIGIN = API_BASE.replace(/\/api\/?$/, "");
+
+// Local-dev uploads return a path relative to the backend ("/uploads/x.jpg"); in
+// production (Vercel Blob) they're already absolute URLs and pass through unchanged.
+export function resolveImageUrl(url) {
+  return url?.startsWith("/uploads/") ? `${API_ORIGIN}${url}` : url;
+}
 
 // Best-effort lead capture: the WhatsApp deep link is the real submission path,
 // so a failed/offline API call must never block or throw for the caller.
@@ -30,5 +37,17 @@ export async function fetchPublishedPosts() {
 export async function fetchPostBySlug(slug) {
   const res = await fetch(`${API_BASE}/posts/${slug}`);
   if (!res.ok) throw new Error("Post not found.");
+  return res.json();
+}
+
+export async function fetchTeam() {
+  const res = await fetch(`${API_BASE}/team`);
+  if (!res.ok) throw new Error("Failed to load team.");
+  return res.json();
+}
+
+export async function fetchTestimonials() {
+  const res = await fetch(`${API_BASE}/testimonials`);
+  if (!res.ok) throw new Error("Failed to load testimonials.");
   return res.json();
 }

@@ -1,9 +1,13 @@
+import { useEffect, useState } from "react";
 import { GraduationCap } from "lucide-react";
 import Layout from "../components/Layout";
 import PageHeader from "../components/PageHeader";
 import Reveal from "../components/Reveal";
+import { fetchTeam, resolveImageUrl } from "../lib/api";
 
-const TEAM = [
+// Used if the API is unreachable or the team collection is empty — the site
+// should never show a blank team page.
+const FALLBACK_TEAM = [
   {
     name: "Chirag Mittal",
     title: "Experienced Advocate",
@@ -34,6 +38,16 @@ const TEAM = [
 ];
 
 export default function Attorneys() {
+  const [team, setTeam] = useState(FALLBACK_TEAM);
+
+  useEffect(() => {
+    fetchTeam()
+      .then((data) => {
+        if (data.length) setTeam(data);
+      })
+      .catch(() => {});
+  }, []);
+
   return (
     <Layout>
       <PageHeader
@@ -45,14 +59,14 @@ export default function Attorneys() {
 
       <section className="py-24 sm:py-32 px-6">
         <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-6">
-          {TEAM.map((p, i) => (
-            <Reveal key={p.name} delay={i * 0.08} className="h-full">
+          {team.map((p, i) => (
+            <Reveal key={p.id ?? p.name} delay={i * 0.08} className="h-full">
               <div
                 className="hover-pop h-full rounded-2xl border overflow-hidden flex flex-col"
                 style={{ borderColor: "var(--line)", background: "var(--card)" }}
               >
                 <div className="relative aspect-[4/3] overflow-hidden">
-                  <img src={p.image} alt={p.name} loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
+                  <img src={resolveImageUrl(p.image)} alt={p.name} loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
                   <div
                     className="absolute inset-0"
                     style={{ background: "linear-gradient(180deg, rgba(6,10,19,0) 60%, rgba(6,10,19,0.65) 100%)" }}

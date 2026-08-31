@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { ArrowLeft, ImagePlus, Plus, Sparkles, Trash2, Upload, Wand2 } from "lucide-react";
+import { ArrowLeft, ImagePlus, Pencil, Plus, Sparkles, Trash2, Upload, Wand2 } from "lucide-react";
 import {
   getPost,
   createPost,
@@ -11,14 +11,9 @@ import {
   uploadImage,
   AuthError,
 } from "../../lib/adminApi";
+import { resolveImageUrl } from "../../lib/api";
 
 const CATEGORIES = ["Technology", "Inter-State Dispute", "Courts", "Laws", "Divorce"];
-const API_ORIGIN = (import.meta.env.VITE_API_URL || "http://localhost:4000/api").replace(/\/api\/?$/, "");
-
-function resolveImageUrl(url) {
-  if (!url) return url;
-  return url.startsWith("/uploads/") ? `${API_ORIGIN}${url}` : url;
-}
 
 export default function AdminPostEditor() {
   const { id } = useParams();
@@ -31,6 +26,9 @@ export default function AdminPostEditor() {
   const [heroImage, setHeroImage] = useState(null);
   const [sections, setSections] = useState([{ text: "<p></p>", image: null }]);
   const [published, setPublished] = useState(false);
+  // Published posts open read-only so they can't be accidentally edited; the
+  // pencil button switches into edit mode. Drafts and new posts are always editable.
+  const [editMode, setEditMode] = useState(!isEdit);
 
   const [loading, setLoading] = useState(isEdit);
   const [saving, setSaving] = useState(false);
@@ -55,6 +53,7 @@ export default function AdminPostEditor() {
         setHeroImage(p.heroImage);
         setSections(p.sections?.length ? p.sections : [{ text: "<p></p>", image: null }]);
         setPublished(p.published);
+        setEditMode(!p.published);
       })
       .catch((err) => {
         if (err instanceof AuthError) return navigate("/admin/login", { replace: true });
@@ -85,6 +84,7 @@ export default function AdminPostEditor() {
         navigate(`/admin/posts/${created.id}/edit`, { replace: true });
       }
       if (publishNow !== undefined) setPublished(publishNow);
+      if (publishNow === true) setEditMode(false);
     } catch (err) {
       guardAuth(err);
     } finally {
@@ -187,10 +187,56 @@ export default function AdminPostEditor() {
         Back to Posts
       </button>
 
-      <h1 className="font-display font-bold text-2xl mb-6">{isEdit ? "Edit Post" : "New Post"}</h1>
+      <div className="flex items-center justify-between mb-6 gap-4">
+        <h1 className="font-display font-bold text-2xl">{isEdit ? title || "Edit Post" : "New Post"}</h1>
+        {isEdit && (
+          <div className="flex items-center gap-3 shrink-0">
+            <span
+              className="rounded-full px-3 py-1 text-xs font-mono uppercase tracking-wide"
+              style={published ? { background: "rgba(34,197,94,0.15)", color: "#16a34a" } : { background: "var(--bg)", color: "var(--fg-muted)", border: "1px solid var(--line)" }}
+            >
+              {published ? "Published" : "Draft"}
+            </span>
+            {!editMode && (
+              <button
+                onClick={() => setEditMode(true)}
+                className="flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-medium"
+                style={{ borderColor: "var(--line)" }}
+              >
+                <Pencil size={12} />
+                Edit
+              </button>
+            )}
+          </div>
+        )}
+      </div>
 
       {error && <p className="text-sm text-red-500 mb-4">{error}</p>}
 
+      {!editMode ? (
+        <div className="rounded-2xl border overflow-hidden" style={{ borderColor: "var(--line)", background: "var(--card)" }}>
+          {heroImage && (
+            <div className="aspect-[21/9] overflow-hidden">
+              <img src={resolveImageUrl(heroImage)} alt="" className="w-full h-full object-cover" />
+            </div>
+          )}
+          <div className="p-6 sm:p-8">
+            <span className="font-mono text-[11px] uppercase tracking-wide text-[var(--fg-muted)]">{category}</span>
+            {excerpt && <p className="text-[var(--fg-muted)] mt-3 italic">{excerpt}</p>}
+            <div className="prose-blog mt-6">
+              {sections.map((s, i) => (
+                <div key={i}>
+                  {s.text && <div dangerouslySetInnerHTML={{ __html: s.text }} />}
+                  {s.image && (
+                    <img src={resolveImageUrl(s.image)} alt="" className="rounded-xl my-6 w-full border" style={{ borderColor: "var(--line)" }} />
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      ) : (
+        <>
       {/* AI draft assist */}
       <div className="rounded-2xl border p-5 mb-6" style={{ borderColor: "var(--line)", background: "var(--card)" }}>
         <p className="flex items-center gap-2 font-display font-semibold text-sm mb-3">
@@ -366,6 +412,8 @@ export default function AdminPostEditor() {
           {saving ? "Saving…" : published ? "Update & Keep Published" : "Publish"}
         </button>
       </div>
+        </>
+      )}
     </div>
   );
 }

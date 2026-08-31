@@ -4,7 +4,7 @@ import { Calendar, Tag } from "lucide-react";
 import Layout from "../components/Layout";
 import PageHeader from "../components/PageHeader";
 import Reveal from "../components/Reveal";
-import { fetchPublishedPosts } from "../lib/api";
+import { fetchPublishedPosts, resolveImageUrl } from "../lib/api";
 
 const CATEGORY_IMAGES = {
   Technology: "/images/blog/technology.jpg",
@@ -15,7 +15,7 @@ const CATEGORY_IMAGES = {
 };
 
 function coverImage(post) {
-  return post.heroImage || CATEGORY_IMAGES[post.category] || "/images/blog/laws.jpg";
+  return resolveImageUrl(post.heroImage) || CATEGORY_IMAGES[post.category] || "/images/blog/laws.jpg";
 }
 
 function formatDate(iso) {

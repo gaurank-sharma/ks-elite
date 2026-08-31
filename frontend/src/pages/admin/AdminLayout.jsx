@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
-import { Inbox, LogOut, Menu, Newspaper, X } from "lucide-react";
+import { Inbox, LogOut, Menu, MessageSquareQuote, Newspaper, Users, X } from "lucide-react";
 import { clearToken } from "../../lib/adminApi";
 
 const NAV = [
   { to: "/admin/leads", label: "Leads", icon: Inbox },
   { to: "/admin/posts", label: "Blog Posts", icon: Newspaper },
+  { to: "/admin/team", label: "Team", icon: Users },
+  { to: "/admin/testimonials", label: "Testimonials", icon: MessageSquareQuote },
 ];
 
 const navLinkClass = ({ isActive }) =>

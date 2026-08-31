@@ -1,8 +1,10 @@
+import { useEffect, useState } from "react";
 import { Quote, Star } from "lucide-react";
 import Reveal from "./Reveal";
 import SplitReveal from "./SplitReveal";
+import { fetchTestimonials } from "../lib/api";
 
-const QUOTES = [
+const FALLBACK_QUOTES = [
   {
     name: "Jindal Fincap Limited",
     role: "Non-Banking Financial Institution",
@@ -25,6 +27,16 @@ const initials = (name) =>
     .join("");
 
 export default function Testimonials() {
+  const [quotes, setQuotes] = useState(FALLBACK_QUOTES);
+
+  useEffect(() => {
+    fetchTestimonials()
+      .then((data) => {
+        if (data.length) setQuotes(data);
+      })
+      .catch(() => {});
+  }, []);
+
   return (
     <section className="py-24 sm:py-32 px-6 border-t" style={{ borderColor: "var(--line)", background: "var(--bg-alt)" }}>
       <div className="max-w-6xl mx-auto">
@@ -39,8 +51,8 @@ export default function Testimonials() {
         </Reveal>
 
         <div className="grid sm:grid-cols-2 gap-6">
-          {QUOTES.map((q, i) => (
-            <Reveal key={q.name} delay={i * 0.1}>
+          {quotes.map((q, i) => (
+            <Reveal key={q.id ?? q.name} delay={i * 0.1}>
               <div
                 className="hover-pop relative h-full rounded-2xl border p-8 sm:p-10 overflow-hidden shadow-sm"
                 style={{ borderColor: "var(--line)", background: "var(--card)" }}

@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import Layout from "../components/Layout";
@@ -5,6 +6,7 @@ import Hero from "../components/Hero";
 import Testimonials from "../components/Testimonials";
 import Reveal from "../components/Reveal";
 import SplitReveal from "../components/SplitReveal";
+import { fetchTeam, resolveImageUrl } from "../lib/api";
 
 const AREAS_PREVIEW = [
   { image: "/images/practice-areas/criminal-law.jpg", title: "Criminal Law", desc: "FIRs, bail, trials, appeals, cheque bounce, and special statutes." },
@@ -15,13 +17,23 @@ const AREAS_PREVIEW = [
   { image: "/images/practice-areas/adr.jpg", title: "Alternate Dispute Resolution", desc: "Resolving disputes efficiently outside traditional litigation." },
 ];
 
-const TEAM_PREVIEW = [
+const FALLBACK_TEAM_PREVIEW = [
   { name: "Chirag Mittal", title: "Experienced Advocate", image: "/images/team/team_1.jpg" },
   { name: "Abhay Kumar", title: "Senior Associate Partner", image: "/images/team/team_3.jpg" },
   { name: "Amrit Rai Gupta", title: "Former MHA Officer", image: "/images/team/team_2.jpg" },
 ];
 
 export default function Home() {
+  const [teamPreview, setTeamPreview] = useState(FALLBACK_TEAM_PREVIEW);
+
+  useEffect(() => {
+    fetchTeam()
+      .then((data) => {
+        if (data.length) setTeamPreview(data.slice(0, 3));
+      })
+      .catch(() => {});
+  }, []);
+
   return (
     <Layout>
       <Hero />
@@ -155,14 +167,14 @@ export default function Home() {
           </Reveal>
 
           <div className="grid sm:grid-cols-3 gap-5">
-            {TEAM_PREVIEW.map((p, i) => (
-              <Reveal key={p.name} delay={i * 0.08}>
+            {teamPreview.map((p, i) => (
+              <Reveal key={p.id ?? p.name} delay={i * 0.08}>
                 <Link
                   to="/attorneys"
                   className="hover-pop group relative block h-full aspect-[3/4] overflow-hidden rounded-2xl"
                 >
                   <img
-                    src={p.image}
+                    src={resolveImageUrl(p.image)}
                     alt={p.name}
                     loading="lazy"
                     className="absolute inset-0 h-full w-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-110"
