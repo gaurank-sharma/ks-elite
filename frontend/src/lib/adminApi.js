@@ -88,6 +88,9 @@ export const draftPost = (topic, notes) =>
 export const fixSectionHtml = (html) =>
   request("/admin/ai/fix-section", { method: "POST", body: JSON.stringify({ html }) });
 
+export const suggestHeroImages = (title, category, excerpt) =>
+  request("/admin/ai/suggest-images", { method: "POST", body: JSON.stringify({ title, category, excerpt }) });
+
 export async function parseDocument(file) {
   const form = new FormData();
   form.append("file", file);

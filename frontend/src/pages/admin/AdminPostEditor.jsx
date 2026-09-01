@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { ArrowLeft, ImagePlus, Pencil, Plus, Sparkles, Trash2, Upload, Wand2 } from "lucide-react";
+import { ArrowLeft, ImagePlus, Images, Pencil, Plus, Sparkles, Trash2, Upload, Wand2 } from "lucide-react";
 import {
   getPost,
   createPost,
   updatePost,
   draftPost,
   fixSectionHtml,
+  suggestHeroImages,
   parseDocument,
   uploadImage,
   AuthError,
@@ -40,6 +41,8 @@ export default function AdminPostEditor() {
 
   const [importBusy, setImportBusy] = useState(false);
   const [fixingIndex, setFixingIndex] = useState(null);
+  const [imageSuggestions, setImageSuggestions] = useState(null);
+  const [suggestingImages, setSuggestingImages] = useState(false);
   const heroFileRef = useRef(null);
   const docFileRef = useRef(null);
 
@@ -124,6 +127,25 @@ export default function AdminPostEditor() {
       setImportBusy(false);
       if (docFileRef.current) docFileRef.current.value = "";
     }
+  };
+
+  const suggestImages = async () => {
+    if (!title.trim()) return setError("Give the post a title first, so the AI knows what to search for.");
+    setSuggestingImages(true);
+    setError("");
+    try {
+      const { results } = await suggestHeroImages(title, category, excerpt);
+      setImageSuggestions(results);
+    } catch (err) {
+      guardAuth(err);
+    } finally {
+      setSuggestingImages(false);
+    }
+  };
+
+  const pickSuggestedImage = (url) => {
+    setHeroImage(url);
+    setImageSuggestions(null);
   };
 
   const uploadHero = async (file) => {
@@ -319,14 +341,48 @@ export default function AdminPostEditor() {
               style={{ borderColor: "var(--line)", background: "var(--card)" }}
             >
               <ImagePlus size={15} />
-              {heroImage ? "Change hero image" : "Upload hero image"}
+              {heroImage ? "Change" : "Upload hero image"}
             </button>
             <input ref={heroFileRef} type="file" accept="image/*" hidden onChange={(e) => uploadHero(e.target.files?.[0])} />
+            <button
+              onClick={suggestImages}
+              disabled={suggestingImages}
+              className="flex items-center gap-2 rounded-xl border px-4 py-3 text-sm disabled:opacity-60"
+              style={{ borderColor: "var(--line)", background: "var(--card)", color: "var(--accent)" }}
+            >
+              <Images size={15} />
+              {suggestingImages ? "Searching…" : "Suggest Images"}
+            </button>
             {heroImage && (
-              <img src={resolveImageUrl(heroImage)} alt="" className="w-12 h-12 rounded-lg object-cover border" style={{ borderColor: "var(--line)" }} />
+              <img src={resolveImageUrl(heroImage)} alt="" className="w-12 h-12 rounded-lg object-cover border shrink-0" style={{ borderColor: "var(--line)" }} />
             )}
           </div>
         </div>
+
+        {imageSuggestions && (
+          <div className="rounded-2xl border p-4" style={{ borderColor: "var(--line)", background: "var(--card)" }}>
+            <div className="flex items-center justify-between mb-3">
+              <p className="text-xs text-[var(--fg-muted)]">Pick one for the hero image:</p>
+              <button onClick={() => setImageSuggestions(null)} className="text-xs text-[var(--fg-muted)] hover:text-[var(--fg)]">
+                Dismiss
+              </button>
+            </div>
+            <div className="grid grid-cols-5 gap-2">
+              {imageSuggestions.map((img, i) => (
+                <button
+                  key={i}
+                  onClick={() => pickSuggestedImage(img.url)}
+                  className="group relative aspect-video rounded-lg overflow-hidden border hover:border-[var(--accent)]"
+                  style={{ borderColor: "var(--line)" }}
+                  title={img.photographer ? `Photo by ${img.photographer} on Unsplash` : undefined}
+                >
+                  <img src={img.thumbUrl} alt={img.description} className="w-full h-full object-cover" />
+                </button>
+              ))}
+            </div>
+            <p className="text-[10px] text-[var(--fg-muted)] mt-2">Photos via Unsplash</p>
+          </div>
+        )}
 
         <textarea
           value={excerpt}
