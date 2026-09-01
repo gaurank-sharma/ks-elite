@@ -30,17 +30,25 @@ export default function Navbar() {
         className="sticky top-0 z-40 backdrop-blur border-b"
         style={{ background: "color-mix(in srgb, var(--bg) 88%, transparent)", borderColor: "var(--line)" }}
       >
-        <nav className="max-w-6xl mx-auto px-6 h-20 lg:h-24 flex items-center gap-10">
-          <Link to="/" className="flex items-center shrink-0" aria-label="K.S. Elite Attorneys — Home">
+        <nav className="max-w-6xl mx-auto px-6 h-20 lg:h-24 flex items-center gap-6">
+          <Link to="/" className="flex items-center gap-3 shrink-0" aria-label="K.S. Elite Attorneys — Home">
             <span
-              className="flex items-center justify-center rounded-full overflow-hidden"
+              className="flex items-center justify-center rounded-full overflow-hidden shrink-0"
               style={{ width: 76, height: 76, background: "var(--color-ivory)" }}
             >
               <img src="/images/logo-mark.png" alt="K.S. Elite Attorneys" style={{ width: 76, height: 76 }} className="object-cover" />
             </span>
+            <span className="flex flex-col leading-tight font-display font-bold uppercase whitespace-nowrap">
+              <span className="text-xs sm:text-sm tracking-wide" style={{ color: "var(--fg)" }}>
+                Sharma &amp;
+              </span>
+              <span className="text-xs sm:text-sm tracking-wide" style={{ color: "var(--accent)" }}>
+                Associates
+              </span>
+            </span>
           </Link>
 
-          <div className="hidden lg:flex items-center gap-7">
+          <div className="hidden lg:flex items-center gap-5">
             {LINKS.map((l) => (
               <NavLink
                 key={l.label}
