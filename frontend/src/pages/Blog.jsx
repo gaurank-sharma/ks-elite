@@ -39,7 +39,7 @@ export default function Blog() {
       <PageHeader
         kicker="Insights"
         title="From the Blog"
-        note="Commentary on courts, technology, and the law — written by the K.S. Elite Attorneys team."
+        note="Commentary on courts, technology, and the law — written by the Sharma & Associates team."
         image="/images/practice-areas/property-law.jpg"
       />
 

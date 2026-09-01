@@ -34,7 +34,7 @@ export default function AdminLayout() {
         style={{ borderColor: "var(--line)", background: "var(--card)" }}
       >
         <div>
-          <p className="font-display font-bold text-sm">K.S. Elite</p>
+          <p className="font-display font-bold text-sm">Sharma & Associates</p>
           <p className="font-mono text-[10px] uppercase tracking-widest text-[var(--fg-muted)]">Admin Portal</p>
         </div>
         <button onClick={() => setMobileOpen((o) => !o)} aria-label={mobileOpen ? "Close menu" : "Open menu"}>
@@ -69,7 +69,7 @@ export default function AdminLayout() {
         style={{ borderColor: "var(--line)", background: "var(--card)" }}
       >
         <div className="px-2 mb-6">
-          <p className="font-display font-bold text-sm">K.S. Elite</p>
+          <p className="font-display font-bold text-sm">Sharma & Associates</p>
           <p className="font-mono text-[10px] uppercase tracking-widest text-[var(--fg-muted)]">Admin Portal</p>
         </div>
 
