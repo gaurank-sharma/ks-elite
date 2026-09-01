@@ -47,7 +47,7 @@ export default function DisclaimerGate() {
         </p>
 
         <ul className="text-sm leading-relaxed text-[var(--fg-muted)] mb-6 flex flex-col gap-2 list-disc pl-5">
-          <li>There has been no solicitation, invitation, or inducement by Sharma & Associates or its members.</li>
+          <li>There has been no solicitation, invitation, or inducement by K.S. Elite Attorneys or its members.</li>
           <li>You are seeking information about the firm on your own accord, for your own information and use.</li>
           <li>This website is not intended to be a source of advertising or solicitation.</li>
         </ul>

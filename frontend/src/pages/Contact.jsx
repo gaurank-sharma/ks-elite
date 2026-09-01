@@ -161,7 +161,7 @@ export default function Contact() {
       <Reveal as="section" className="px-6 pb-24 sm:pb-32">
         <div className="max-w-6xl mx-auto rounded-2xl overflow-hidden border" style={{ borderColor: "var(--line)" }}>
           <iframe
-            title="Sharma & Associates — Kalkaji, New Delhi"
+            title="K.S. Elite Attorneys — Kalkaji, New Delhi"
             src="https://maps.google.com/maps?q=Kalkaji%2C%20New%20Delhi&t=&z=14&ie=UTF8&iwloc=&output=embed"
             width="100%"
             height="360"

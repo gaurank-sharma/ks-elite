@@ -30,7 +30,7 @@ export default function About() {
     <Layout>
       <PageHeader
         kicker="Our Story"
-        title="About Sharma & Associates"
+        title="About K.S. Elite Attorneys"
         note="A premier litigation firm headquartered in Delhi, built on 24+ years of courtroom experience and a client-first philosophy."
         image="/images/practice-areas/business-law.jpg"
       />
@@ -39,7 +39,7 @@ export default function About() {
         <div className="max-w-6xl mx-auto grid lg:grid-cols-[0.85fr_1.15fr] gap-14 items-center">
           <Reveal className="relative mx-auto lg:mx-0 w-64 sm:w-80">
             <div className="relative aspect-[4/5] rounded-3xl overflow-hidden border" style={{ borderColor: "var(--line)" }}>
-              <img src="/images/founder.png" alt="Founder, Sharma & Associates" className="absolute inset-0 h-full w-full object-cover" />
+              <img src="/images/founder.png" alt="Founder, K.S. Elite Attorneys" className="absolute inset-0 h-full w-full object-cover" />
               <div
                 className="absolute inset-0"
                 style={{ background: "linear-gradient(160deg, rgba(6,10,19,0.1) 0%, rgba(6,10,19,0.5) 100%)" }}
@@ -67,7 +67,7 @@ export default function About() {
                 Mr. K.S. Sharma
               </h2>
               <p className="text-[var(--fg-muted)] mt-2 font-mono text-xs tracking-[0.15em] uppercase">
-                Founder, Sharma & Associates
+                Founder, K.S. Elite Attorneys
               </p>
             </Reveal>
 

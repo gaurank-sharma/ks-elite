@@ -42,7 +42,7 @@ export default function Home() {
         <div className="max-w-6xl mx-auto grid lg:grid-cols-[0.8fr_1.2fr] gap-14 items-center">
           <Reveal className="relative mx-auto lg:mx-0 w-56 sm:w-64">
             <div className="hover-pop relative aspect-square rounded-3xl overflow-hidden border" style={{ borderColor: "var(--line)" }}>
-              <img src="/images/founder.png" alt="Founder, Sharma & Associates" className="absolute inset-0 h-full w-full object-cover" />
+              <img src="/images/founder.png" alt="Founder, K.S. Elite Attorneys" className="absolute inset-0 h-full w-full object-cover" />
               <div
                 className="absolute inset-0"
                 style={{ background: "linear-gradient(160deg, rgba(6,10,19,0.15) 0%, rgba(6,10,19,0.55) 100%)" }}

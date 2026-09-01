@@ -38,7 +38,7 @@ export default function AdminLogin() {
           <span className="font-mono text-xs uppercase tracking-[0.25em]">Admin Portal</span>
         </div>
         <h1 className="font-display font-bold text-2xl" style={{ color: "var(--color-ivory)" }}>
-          Sharma & Associates
+          K.S. Elite Attorneys
         </h1>
 
         <input

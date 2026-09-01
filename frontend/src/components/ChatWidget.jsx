@@ -4,7 +4,7 @@ import { sendChatMessage } from "../lib/api";
 
 const GREETING = {
   role: "assistant",
-  content: "Hi, I'm the Sharma & Associates assistant. Ask me about our practice areas or offices — or tell me your name and phone number and I'll book you a consultation right here.",
+  content: "Hi, I'm the K.S. Elite Attorneys assistant. Ask me about our practice areas or offices — or tell me your name and phone number and I'll book you a consultation right here.",
 };
 
 // Safety net: the model is told not to use markdown, but if it slips (e.g. **bold**),
@@ -75,7 +75,7 @@ export default function ChatWidget() {
           style={{ borderColor: "var(--line)", background: "var(--card)", height: "min(520px, calc(100vh - 10rem))" }}
         >
           <div className="px-5 py-4 border-b" style={{ borderColor: "var(--line)" }}>
-            <p className="font-display font-bold text-sm">Sharma & Associates</p>
+            <p className="font-display font-bold text-sm">K.S. Elite Attorneys</p>
             <p className="text-xs text-[var(--fg-muted)] mt-0.5">Usually replies in a few seconds</p>
           </div>
 

@@ -9,7 +9,7 @@ const FALLBACK_QUOTES = [
     name: "Jindal Fincap Limited",
     role: "Non-Banking Financial Institution",
     quote:
-      "Sharma & Associates brought precision and clarity to complex financial disputes, protecting our interests at every stage.",
+      "K.S. Elite Attorneys brought precision and clarity to complex financial disputes, protecting our interests at every stage.",
   },
   {
     name: "ENAR Weld",

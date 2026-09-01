@@ -55,12 +55,12 @@ export default function Preloader({ onDone }) {
       className="fixed inset-0 z-[200] flex flex-col items-center justify-center cursor-pointer"
       style={{ background: "var(--color-ivory)" }}
       role="status"
-      aria-label="Sharma & Associates"
+      aria-label="K.S. Elite Attorneys"
     >
       <img
         ref={logoRef}
         src="/images/logo.png"
-        alt="Sharma & Associates"
+        alt="K.S. Elite Attorneys"
         width={168}
         height={168}
         className="object-contain"
@@ -73,7 +73,7 @@ export default function Preloader({ onDone }) {
         className="font-mono text-[10px] tracking-[0.35em] uppercase mt-4"
         style={{ color: "var(--color-navy)" }}
       >
-        Sharma & Associates
+        K.S. Elite Attorneys
       </p>
     </div>
   );

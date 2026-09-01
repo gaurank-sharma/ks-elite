@@ -24,7 +24,7 @@ export default function Footer() {
           className="font-display font-bold uppercase leading-[0.85] text-[clamp(2.4rem,9vw,6rem)]"
           style={{ color: "var(--color-ivory)" }}
         >
-          Sharma &amp; <span style={{ color: "var(--color-gold)" }}>Associates</span>
+          K.S. <span style={{ color: "var(--color-gold)" }}>Elite</span> Attorneys
         </p>
       </div>
 
@@ -32,7 +32,7 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row md:items-start justify-between gap-10">
           <div>
             <p className="font-mono text-[11px] tracking-[0.2em] uppercase" style={{ color: "rgba(247,244,236,0.5)" }}>
-              Advocates &amp; Legal Consultants — New Delhi
+              Sharma &amp; Associates — New Delhi
             </p>
             <a
               href="https://www.linkedin.com/company/ks-elite-attorneys/"
@@ -69,7 +69,7 @@ export default function Footer() {
             this site should be construed as legal advice.
           </p>
           <p className="text-xs mt-4" style={{ color: "rgba(247,244,236,0.4)" }}>
-            © {new Date().getFullYear()} Sharma & Associates. All rights reserved.
+            © {new Date().getFullYear()} K.S. Elite Attorneys. All rights reserved.
           </p>
         </div>
       </div>

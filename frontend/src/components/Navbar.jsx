@@ -31,12 +31,12 @@ export default function Navbar() {
         style={{ background: "color-mix(in srgb, var(--bg) 88%, transparent)", borderColor: "var(--line)" }}
       >
         <nav className="max-w-6xl mx-auto px-6 h-20 lg:h-24 flex items-center gap-10">
-          <Link to="/" className="flex items-center shrink-0" aria-label="Sharma & Associates — Home">
+          <Link to="/" className="flex items-center shrink-0" aria-label="K.S. Elite Attorneys — Home">
             <span
               className="flex items-center justify-center rounded-full overflow-hidden"
               style={{ width: 76, height: 76, background: "var(--color-ivory)" }}
             >
-              <img src="/images/logo-mark.png" alt="Sharma & Associates" style={{ width: 76, height: 76 }} className="object-cover" />
+              <img src="/images/logo-mark.png" alt="K.S. Elite Attorneys" style={{ width: 76, height: 76 }} className="object-cover" />
             </span>
           </Link>
 
@@ -101,7 +101,7 @@ export default function Navbar() {
             className="flex items-center justify-center rounded-full overflow-hidden"
             style={{ width: 66, height: 66, background: "var(--color-ivory)" }}
           >
-            <img src="/images/logo-mark.png" alt="Sharma & Associates" style={{ width: 66, height: 66 }} className="object-cover" />
+            <img src="/images/logo-mark.png" alt="K.S. Elite Attorneys" style={{ width: 66, height: 66 }} className="object-cover" />
           </span>
           <button onClick={() => setOpen(false)} aria-label="Close menu" className="p-2 -mr-2" style={{ color: "var(--fg)" }}>
             <X size={26} />
