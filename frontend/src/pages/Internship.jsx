@@ -26,6 +26,15 @@ const initialForm = {
   month: "",
 };
 
+function Field({ label, children }) {
+  return (
+    <label className="flex flex-col gap-1.5">
+      <span className="font-mono text-[11px] uppercase tracking-wide text-[var(--fg-muted)]">{label}</span>
+      {children}
+    </label>
+  );
+}
+
 export default function Internship() {
   const [form, setForm] = useState(initialForm);
   const [resume, setResume] = useState(null);
@@ -119,52 +128,74 @@ export default function Internship() {
               <h2 className="font-display font-bold text-xl mb-1">Application Form</h2>
 
               <div className="grid sm:grid-cols-2 gap-4">
-                <input required placeholder="First name" value={form.firstName} onChange={update("firstName")} className={inputClass} style={inputStyle} />
-                <input required placeholder="Surname" value={form.surname} onChange={update("surname")} className={inputClass} style={inputStyle} />
+                <Field label="First Name">
+                  <input required placeholder="Enter your first name" value={form.firstName} onChange={update("firstName")} className={inputClass} style={inputStyle} />
+                </Field>
+                <Field label="Surname">
+                  <input required placeholder="Enter your surname" value={form.surname} onChange={update("surname")} className={inputClass} style={inputStyle} />
+                </Field>
               </div>
 
-              <input placeholder="Preferred name (optional)" value={form.preferredName} onChange={update("preferredName")} className={inputClass} style={inputStyle} />
+              <Field label="Preferred Name (optional)">
+                <input placeholder="Enter your preferred name" value={form.preferredName} onChange={update("preferredName")} className={inputClass} style={inputStyle} />
+              </Field>
 
-              <input required placeholder="College / University" value={form.college} onChange={update("college")} className={inputClass} style={inputStyle} />
+              <Field label="College / University">
+                <input required placeholder="Enter your college name" value={form.college} onChange={update("college")} className={inputClass} style={inputStyle} />
+              </Field>
 
               <div className="grid sm:grid-cols-2 gap-4">
-                <input required type="email" placeholder="Email" value={form.email} onChange={update("email")} className={inputClass} style={inputStyle} />
-                <input required type="tel" placeholder="Contact number" value={form.contact} onChange={update("contact")} className={inputClass} style={inputStyle} />
+                <Field label="Email">
+                  <input required type="email" placeholder="Enter your email" value={form.email} onChange={update("email")} className={inputClass} style={inputStyle} />
+                </Field>
+                <Field label="Contact Number">
+                  <input required type="tel" placeholder="Enter your number" value={form.contact} onChange={update("contact")} className={inputClass} style={inputStyle} />
+                </Field>
               </div>
 
               <div className="grid sm:grid-cols-3 gap-4">
-                <select required value={form.gender} onChange={update("gender")} className={inputClass} style={inputStyle}>
-                  <option value="" disabled>
-                    Gender
-                  </option>
-                  <option>Female</option>
-                  <option>Male</option>
-                  <option>Other</option>
-                  <option>Prefer not to say</option>
-                </select>
-                <select required value={form.mode} onChange={update("mode")} className={inputClass} style={inputStyle}>
-                  <option value="" disabled>
-                    Mode of Internship
-                  </option>
-                  <option>Offline</option>
-                  <option>Online</option>
-                  <option>Hybrid</option>
-                </select>
-                <input required type="date" value={form.dob} onChange={update("dob")} className={inputClass} style={inputStyle} />
+                <Field label="Gender">
+                  <select required value={form.gender} onChange={update("gender")} className={inputClass} style={inputStyle}>
+                    <option value="" disabled>
+                      Select gender
+                    </option>
+                    <option>Female</option>
+                    <option>Male</option>
+                    <option>Other</option>
+                    <option>Prefer not to say</option>
+                  </select>
+                </Field>
+                <Field label="Mode of Internship">
+                  <select required value={form.mode} onChange={update("mode")} className={inputClass} style={inputStyle}>
+                    <option value="" disabled>
+                      Select mode
+                    </option>
+                    <option>Offline</option>
+                    <option>Online</option>
+                    <option>Hybrid</option>
+                  </select>
+                </Field>
+                <Field label="Date of Birth">
+                  <input required type="date" value={form.dob} onChange={update("dob")} className={inputClass} style={inputStyle} />
+                </Field>
               </div>
 
-              <input required placeholder="Preferred internship month (e.g. June 2026)" value={form.month} onChange={update("month")} className={inputClass} style={inputStyle} />
+              <Field label="Preferred Month of Internship">
+                <input required placeholder="e.g. June 2026" value={form.month} onChange={update("month")} className={inputClass} style={inputStyle} />
+              </Field>
 
-              <label
-                className="flex items-center gap-3 rounded-xl border px-4 py-3 text-sm cursor-pointer"
-                style={inputStyle}
-              >
-                <Paperclip size={16} className="shrink-0 text-[var(--fg-muted)]" />
-                <span className={resume ? "" : "text-[var(--fg-muted)]"}>
-                  {resume ? resume.name : "Upload your resume (PDF, optional)"}
-                </span>
-                <input type="file" accept="application/pdf" onChange={handleResumeChange} className="hidden" />
-              </label>
+              <Field label="Resume (PDF, optional)">
+                <label
+                  className="flex items-center gap-3 rounded-xl border px-4 py-3 text-sm cursor-pointer"
+                  style={inputStyle}
+                >
+                  <Paperclip size={16} className="shrink-0 text-[var(--fg-muted)]" />
+                  <span className={resume ? "" : "text-[var(--fg-muted)]"}>
+                    {resume ? resume.name : "Upload your resume"}
+                  </span>
+                  <input type="file" accept="application/pdf" onChange={handleResumeChange} className="hidden" />
+                </label>
+              </Field>
               {resumeError && <p className="text-xs text-red-500 -mt-2">{resumeError}</p>}
 
               <button

@@ -31,11 +31,26 @@ export default function ChatWidget() {
   const [input, setInput] = useState("");
   const [sending, setSending] = useState(false);
   const [error, setError] = useState("");
+  const [showTeaser, setShowTeaser] = useState(false);
   const scrollRef = useRef(null);
 
   useEffect(() => {
     if (scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
   }, [messages, open]);
+
+  // Proactive "Hi! How can we help?" bubble — pops in once per browser
+  // session after a short delay, dismissed for good once the visitor
+  // opens the chat or closes the bubble.
+  useEffect(() => {
+    if (sessionStorage.getItem("chatTeaserSeen")) return;
+    const timer = setTimeout(() => setShowTeaser(true), 1800);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const dismissTeaser = () => {
+    setShowTeaser(false);
+    sessionStorage.setItem("chatTeaserSeen", "1");
+  };
 
   const send = async (e) => {
     e.preventDefault();
@@ -60,8 +75,34 @@ export default function ChatWidget() {
 
   return (
     <>
+      {showTeaser && !open && (
+        <div className="fixed bottom-24 right-6 z-50 flex items-start gap-1 animate-[fadeInUp_0.4s_ease-out]">
+          <button
+            onClick={() => {
+              dismissTeaser();
+              setOpen(true);
+            }}
+            className="hover-pop rounded-full pl-5 pr-4 py-3 text-sm font-display font-semibold shadow-lg text-left"
+            style={{ background: "var(--color-gold)", color: "var(--color-navy)" }}
+          >
+            Hi! How can we help? 👋
+          </button>
+          <button
+            onClick={dismissTeaser}
+            aria-label="Dismiss"
+            className="w-6 h-6 rounded-full flex items-center justify-center shrink-0 mt-0.5 shadow"
+            style={{ background: "var(--card)", border: "1px solid var(--line)", color: "var(--fg-muted)" }}
+          >
+            <X size={12} />
+          </button>
+        </div>
+      )}
+
       <button
-        onClick={() => setOpen((o) => !o)}
+        onClick={() => {
+          dismissTeaser();
+          setOpen((o) => !o);
+        }}
         aria-label={open ? "Close chat" : "Open chat"}
         className="hover-pop fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full flex items-center justify-center shadow-lg"
         style={{ background: "var(--accent)", color: "var(--color-navy)" }}

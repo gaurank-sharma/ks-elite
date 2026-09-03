@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Quote, Star } from "lucide-react";
 import Reveal from "./Reveal";
 import SplitReveal from "./SplitReveal";
-import { fetchTestimonials } from "../lib/api";
+import { fetchTestimonials, resolveImageUrl } from "../lib/api";
 
 const FALLBACK_QUOTES = [
   {
@@ -67,19 +67,34 @@ export default function Testimonials() {
 
                 <div className="flex gap-0.5 mb-5 relative">
                   {Array.from({ length: 5 }).map((_, s) => (
-                    <Star key={s} size={15} style={{ color: "var(--accent)" }} fill="var(--accent)" strokeWidth={0} />
+                    <Star
+                      key={s}
+                      size={15}
+                      style={{ color: "var(--accent)" }}
+                      fill={s < (q.rating || 5) ? "var(--accent)" : "none"}
+                      strokeWidth={s < (q.rating || 5) ? 0 : 1.5}
+                    />
                   ))}
                 </div>
 
                 <p className="font-display text-xl sm:text-2xl leading-snug relative">&ldquo;{q.quote}&rdquo;</p>
 
                 <div className="mt-8 flex items-center gap-4 relative">
-                  <div
-                    className="w-12 h-12 rounded-full flex items-center justify-center font-display font-bold shrink-0"
-                    style={{ background: "var(--color-navy)", color: "var(--color-gold)" }}
-                  >
-                    {initials(q.name)}
-                  </div>
+                  {q.image ? (
+                    <img
+                      src={resolveImageUrl(q.image)}
+                      alt=""
+                      className="w-12 h-12 rounded-full object-cover shrink-0 border"
+                      style={{ borderColor: "var(--line)" }}
+                    />
+                  ) : (
+                    <div
+                      className="w-12 h-12 rounded-full flex items-center justify-center font-display font-bold shrink-0"
+                      style={{ background: "var(--color-navy)", color: "var(--color-gold)" }}
+                    >
+                      {initials(q.name)}
+                    </div>
+                  )}
                   <div>
                     <div className="font-display font-bold">{q.name}</div>
                     <div className="font-mono text-[11px] uppercase tracking-wide text-[var(--fg-muted)] mt-0.5">

@@ -4,8 +4,8 @@
 
 @theme {
   --font-display: "Playfair Display", "Georgia", serif;
-  --font-body: "Inter", sans-serif;
-  --font-mono: "Inter", sans-serif;
+  --font-body: "Manrope", sans-serif;
+  --font-mono: "Manrope", sans-serif;
 
   --color-navy: #0b1220;
   --color-navy-deep: #060a13;
@@ -87,6 +87,18 @@
 }
 .font-mono {
   font-family: var(--font-mono);
+}
+
+/* chat widget teaser bubble */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* marquee */
