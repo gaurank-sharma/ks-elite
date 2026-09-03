@@ -5,7 +5,7 @@ import Reveal from "../components/Reveal";
 import SplitReveal from "../components/SplitReveal";
 
 const CREDENTIALS = [
-  { icon: Landmark, text: "24+ years before the Supreme Court, High Courts, District Courts & Tribunals" },
+  { icon: Landmark, text: "25+ years before the Supreme Court, High Courts, District Courts & Tribunals" },
   { icon: Scale, text: "Head — Dispute Resolution, Criminal Litigation Specialist" },
   { icon: GraduationCap, text: "Law graduate, Lucknow University" },
 ];
@@ -31,7 +31,7 @@ export default function About() {
       <PageHeader
         kicker="Our Story"
         title="About K.S. Elite Attorneys"
-        note="A premier litigation firm headquartered in Delhi, built on 24+ years of courtroom experience and a client-first philosophy."
+        note="A premier litigation firm headquartered in Delhi, built on 25+ years of courtroom experience and a client-first philosophy."
         image="/images/practice-areas/business-law.jpg"
       />
 
@@ -50,7 +50,7 @@ export default function About() {
               style={{ background: "var(--color-navy)", borderColor: "var(--color-gold)" }}
             >
               <div className="font-display font-bold text-2xl" style={{ color: "var(--color-gold)" }}>
-                24+
+                25+
               </div>
               <div className="font-mono text-[10px] uppercase tracking-widest" style={{ color: "var(--color-ivory)" }}>
                 Years of Practice

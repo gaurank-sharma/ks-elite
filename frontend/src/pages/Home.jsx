@@ -52,7 +52,7 @@ export default function Home() {
               className="absolute -bottom-5 -right-5 rounded-2xl border px-5 py-3"
               style={{ background: "var(--color-navy)", borderColor: "var(--color-gold)" }}
             >
-              <div className="font-display font-bold text-2xl" style={{ color: "var(--color-gold)" }}>24+</div>
+              <div className="font-display font-bold text-2xl" style={{ color: "var(--color-gold)" }}>25+</div>
               <div className="font-mono text-[9px] uppercase tracking-widest" style={{ color: "var(--color-ivory)" }}>Years of Practice</div>
             </div>
           </Reveal>
@@ -60,7 +60,7 @@ export default function Home() {
           <div>
             <span className="font-mono text-xs tracking-[0.3em] uppercase text-[var(--fg-muted)]">About the Founder</span>
             <SplitReveal
-              text="24+ years of courtroom precision."
+              text="25+ years of courtroom precision."
               className="font-display font-bold uppercase leading-[1.02] text-[clamp(1.8rem,4.5vw,3rem)] mt-2"
             />
             <p className="mt-5 text-base sm:text-lg leading-relaxed text-[var(--fg-muted)] max-w-xl">

@@ -4,7 +4,7 @@ import gsap from "gsap";
 import { Gavel, Landmark, Phone, ShieldCheck } from "lucide-react";
 
 const STATS = [
-  { icon: Landmark, label: "24+ Years", sub: "of litigation practice" },
+  { icon: Landmark, label: "25+ Years", sub: "of litigation practice" },
   { icon: Gavel, label: "Supreme Court", sub: "& High Courts of India" },
   { icon: ShieldCheck, label: "17 Practice", sub: "areas of expertise" },
 ];
