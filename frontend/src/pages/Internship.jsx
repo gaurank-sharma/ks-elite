@@ -10,7 +10,7 @@ const WHATSAPP_NUMBER = "919891967200";
 const PERKS = [
   { icon: BookOpen, title: "Real Casework", desc: "Assist on live matters before the Delhi High Court and subordinate courts." },
   { icon: Users, title: "Direct Mentorship", desc: "Work alongside advocates with 6–30 years of courtroom experience." },
-  { icon: Laptop, title: "Online or Offline", desc: "Flexible internship mode to fit your college schedule." },
+  { icon: Laptop, title: "Online, Offline, or Hybrid", desc: "Flexible internship mode to fit your college schedule." },
 ];
 
 const initialForm = {
@@ -21,7 +21,7 @@ const initialForm = {
   email: "",
   contact: "",
   gender: "",
-  mode: "Offline",
+  mode: "",
   dob: "",
   month: "",
 };
@@ -61,7 +61,7 @@ export default function Internship() {
       `Email: ${form.email}`,
       `Contact: ${form.contact}`,
       `Gender: ${form.gender}`,
-      `Mode: ${form.mode}`,
+      `Mode of Internship: ${form.mode}`,
       `DOB: ${form.dob}`,
       `Preferred month: ${form.month}`,
       "",
@@ -142,9 +142,13 @@ export default function Internship() {
                   <option>Other</option>
                   <option>Prefer not to say</option>
                 </select>
-                <select value={form.mode} onChange={update("mode")} className={inputClass} style={inputStyle}>
+                <select required value={form.mode} onChange={update("mode")} className={inputClass} style={inputStyle}>
+                  <option value="" disabled>
+                    Mode of Internship
+                  </option>
                   <option>Offline</option>
                   <option>Online</option>
+                  <option>Hybrid</option>
                 </select>
                 <input required type="date" value={form.dob} onChange={update("dob")} className={inputClass} style={inputStyle} />
               </div>

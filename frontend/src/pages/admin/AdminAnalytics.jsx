@@ -25,6 +25,25 @@ function groupByMonth(records, limit = 7) {
     .map(([key, count]) => ({ key, label: monthLabel(key), count }));
 }
 
+function groupByPreferredMonth(records, limit = 12) {
+  const counts = {};
+  for (const r of records) {
+    const key = r.month?.trim() || "Unspecified";
+    counts[key] = (counts[key] || 0) + 1;
+  }
+  return Object.entries(counts)
+    .sort((a, b) => {
+      const da = Date.parse(a[0]);
+      const db = Date.parse(b[0]);
+      if (!Number.isNaN(da) && !Number.isNaN(db)) return da - db;
+      if (!Number.isNaN(da)) return -1;
+      if (!Number.isNaN(db)) return 1;
+      return a[0].localeCompare(b[0]);
+    })
+    .slice(0, limit)
+    .map(([key, count]) => ({ key, label: key, count }));
+}
+
 function groupByMatter(contacts) {
   const counts = {};
   for (const c of contacts) {
@@ -66,7 +85,7 @@ export default function AdminAnalytics() {
   }, []);
 
   const contactMonths = useMemo(() => (contacts ? groupByMonth(contacts) : []), [contacts]);
-  const internshipMonths = useMemo(() => (internships ? groupByMonth(internships) : []), [internships]);
+  const internshipMonths = useMemo(() => (internships ? groupByPreferredMonth(internships) : []), [internships]);
   const matterBreakdown = useMemo(() => (contacts ? groupByMatter(contacts) : []), [contacts]);
   const maxMatterCount = matterBreakdown[0]?.count || 1;
 
@@ -96,7 +115,7 @@ export default function AdminAnalytics() {
       <section>
         <p className="flex items-center gap-2 font-display font-semibold text-sm mb-4">
           <Users size={15} style={{ color: "var(--accent)" }} />
-          Internship Applications — by Month
+          Internship Applications — by Preferred Month
         </p>
         <div className="grid sm:grid-cols-3 lg:grid-cols-4 gap-4">
           <MonthCard label="Total" count={internships.length} accent />

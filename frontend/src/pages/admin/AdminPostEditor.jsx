@@ -24,6 +24,8 @@ export default function AdminPostEditor() {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState(CATEGORIES[0]);
   const [excerpt, setExcerpt] = useState("");
+  const [authorName, setAuthorName] = useState("");
+  const [authorLinkedIn, setAuthorLinkedIn] = useState("");
   const [heroImage, setHeroImage] = useState(null);
   const [sections, setSections] = useState([{ text: "<p></p>", image: null }]);
   const [published, setPublished] = useState(false);
@@ -53,6 +55,8 @@ export default function AdminPostEditor() {
         setTitle(p.title);
         setCategory(p.category);
         setExcerpt(p.excerpt || "");
+        setAuthorName(p.authorName || "");
+        setAuthorLinkedIn(p.authorLinkedIn || "");
         setHeroImage(p.heroImage);
         setSections(p.sections?.length ? p.sections : [{ text: "<p></p>", image: null }]);
         setPublished(p.published);
@@ -78,7 +82,16 @@ export default function AdminPostEditor() {
     if (!title.trim()) return setError("Title is required.");
     setSaving(true);
     setError("");
-    const payload = { title, category, excerpt, heroImage, sections, published: publishNow ?? published };
+    const payload = {
+      title,
+      category,
+      excerpt,
+      authorName,
+      authorLinkedIn,
+      heroImage,
+      sections,
+      published: publishNow ?? published,
+    };
     try {
       if (isEdit) {
         await updatePost(id, payload);
@@ -245,6 +258,19 @@ export default function AdminPostEditor() {
           <div className="p-6 sm:p-8">
             <span className="font-mono text-[11px] uppercase tracking-wide text-[var(--fg-muted)]">{category}</span>
             {excerpt && <p className="text-[var(--fg-muted)] mt-3 italic">{excerpt}</p>}
+            {authorName && (
+              <p className="text-sm mt-3">
+                By {authorName}
+                {authorLinkedIn && (
+                  <>
+                    {" · "}
+                    <a href={authorLinkedIn} target="_blank" rel="noreferrer" className="hover:text-[var(--accent)] underline">
+                      LinkedIn
+                    </a>
+                  </>
+                )}
+              </p>
+            )}
             <div className="prose-blog mt-6">
               {sections.map((s, i) => (
                 <div key={i}>
@@ -392,6 +418,23 @@ export default function AdminPostEditor() {
           className="rounded-xl border px-4 py-3 text-sm outline-none focus:border-[var(--accent)] resize-none"
           style={{ borderColor: "var(--line)", background: "var(--card)" }}
         />
+
+        <div className="grid sm:grid-cols-2 gap-4">
+          <input
+            value={authorName}
+            onChange={(e) => setAuthorName(e.target.value)}
+            placeholder="Author name (optional)"
+            className="rounded-xl border px-4 py-3 text-sm outline-none focus:border-[var(--accent)]"
+            style={{ borderColor: "var(--line)", background: "var(--card)" }}
+          />
+          <input
+            value={authorLinkedIn}
+            onChange={(e) => setAuthorLinkedIn(e.target.value)}
+            placeholder="Author LinkedIn URL (optional)"
+            className="rounded-xl border px-4 py-3 text-sm outline-none focus:border-[var(--accent)]"
+            style={{ borderColor: "var(--line)", background: "var(--card)" }}
+          />
+        </div>
       </div>
 
       {/* Sections */}

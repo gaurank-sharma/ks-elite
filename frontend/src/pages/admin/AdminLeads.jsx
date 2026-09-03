@@ -99,7 +99,7 @@ export default function AdminLeads() {
         ["Email", "email"],
         ["Contact", "contact"],
         ["College", "college"],
-        ["Mode", "mode"],
+        ["Mode of Internship", "mode"],
         ["Preferred Month", "month"],
         ["AI Verdict", "aiVerdict"],
         ["AI Score", "aiScore"],
@@ -201,7 +201,7 @@ export default function AdminLeads() {
                     <td className="px-4 py-3 max-w-xs text-[var(--fg-muted)]">
                       {tab === "contact" ? l.message : (
                         <div className="flex flex-col gap-1.5">
-                          <span>{l.mode} · Preferred: {l.month}</span>
+                          <span>Mode of Internship: {l.mode} · Preferred Month: {l.month}</span>
                           {l.resumeUrl && (
                             <a
                               href={resolveImageUrl(l.resumeUrl)}

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { ArrowLeft, Calendar, Tag } from "lucide-react";
+import { ArrowLeft, Calendar, ExternalLink, Tag } from "lucide-react";
 import Layout from "../components/Layout";
 import Reveal from "../components/Reveal";
 import { fetchPostBySlug, resolveImageUrl } from "../lib/api";
@@ -51,6 +51,25 @@ export default function BlogPost() {
               </div>
 
               <h1 className="font-display font-bold text-3xl sm:text-5xl leading-tight mb-6">{post.title}</h1>
+
+              {post.authorName && (
+                <div className="flex items-center gap-2 text-sm text-[var(--fg-muted)] mb-8">
+                  <span>
+                    By <span className="font-medium text-[var(--fg)]">{post.authorName}</span>
+                  </span>
+                  {post.authorLinkedIn && (
+                    <a
+                      href={post.authorLinkedIn}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="flex items-center gap-1 hover:text-[var(--accent)] transition-colors"
+                    >
+                      <ExternalLink size={14} />
+                      LinkedIn
+                    </a>
+                  )}
+                </div>
+              )}
 
               {post.heroImage && (
                 <div className="rounded-2xl overflow-hidden mb-10 border" style={{ borderColor: "var(--line)" }}>
