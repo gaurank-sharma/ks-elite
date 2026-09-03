@@ -1,12 +1,14 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FileText, Sparkles, Trash2 } from "lucide-react";
+import { Download, FileText, Sparkles, Trash2 } from "lucide-react";
 import { getContacts, getInternships, updateLeadStatus, deleteLead, AuthError } from "../../lib/adminApi";
 import { resolveImageUrl } from "../../lib/api";
+import { downloadCsv } from "../../lib/csv";
+import { useAdminUser, hasPermission } from "../../lib/AdminUserContext";
 
-const TABS = [
-  { key: "contact", label: "Consultation Requests", fetcher: getContacts },
-  { key: "internship", label: "Internship Applications", fetcher: getInternships },
+const ALL_TABS = [
+  { key: "contact", label: "Consultation Requests", fetcher: getContacts, permission: "leads_contact" },
+  { key: "internship", label: "Internship Applications", fetcher: getInternships, permission: "leads_internship" },
 ];
 
 const STATUS_OPTIONS = ["new", "contacted", "closed"];
@@ -19,15 +21,24 @@ const VERDICT_COLORS = {
 
 export default function AdminLeads() {
   const navigate = useNavigate();
-  const [tab, setTab] = useState("contact");
+  const user = useAdminUser();
+  const TABS = useMemo(() => ALL_TABS.filter((t) => hasPermission(user, t.permission)), [user]);
+
+  const [tab, setTab] = useState(null);
   const [leads, setLeads] = useState(null);
   const [error, setError] = useState("");
   const [recommendedOnly, setRecommendedOnly] = useState(false);
 
+  // Default to the first tab this user actually has access to, once known.
+  useEffect(() => {
+    if (TABS.length && !tab) setTab(TABS[0].key);
+  }, [TABS]);
+
   const load = (key) => {
     setLeads(null);
     setError("");
-    const fetcher = TABS.find((t) => t.key === key).fetcher;
+    const fetcher = TABS.find((t) => t.key === key)?.fetcher;
+    if (!fetcher) return;
     fetcher()
       .then(setLeads)
       .catch((err) => {
@@ -36,7 +47,9 @@ export default function AdminLeads() {
       });
   };
 
-  useEffect(() => load(tab), [tab]);
+  useEffect(() => {
+    if (tab) load(tab);
+  }, [tab]);
 
   const setStatus = async (id, status) => {
     try {
@@ -69,9 +82,47 @@ export default function AdminLeads() {
 
   const recommendedCount = tab === "internship" ? (leads?.filter((l) => l.aiVerdict === "Strong Fit").length ?? 0) : 0;
 
+  const exportCsv = () => {
+    if (tab === "contact") {
+      downloadCsv("consultation-requests.csv", visibleLeads, [
+        ["Received", (l) => new Date(l.receivedAt).toLocaleString()],
+        ["Name", "name"],
+        ["Phone", "phone"],
+        ["Matter", "matter"],
+        ["Message", "message"],
+        ["Status", "status"],
+      ]);
+    } else {
+      downloadCsv("internship-applications.csv", visibleLeads, [
+        ["Received", (l) => new Date(l.receivedAt).toLocaleString()],
+        ["Name", (l) => `${l.firstName} ${l.surname}`],
+        ["Email", "email"],
+        ["Contact", "contact"],
+        ["College", "college"],
+        ["Mode", "mode"],
+        ["Preferred Month", "month"],
+        ["AI Verdict", "aiVerdict"],
+        ["AI Score", "aiScore"],
+        ["Status", "status"],
+      ]);
+    }
+  };
+
   return (
     <div>
-      <h1 className="font-display font-bold text-2xl mb-6">Leads</h1>
+      <div className="flex items-center justify-between mb-6">
+        <h1 className="font-display font-bold text-2xl">Leads</h1>
+        {visibleLeads?.length > 0 && (
+          <button
+            onClick={exportCsv}
+            className="flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium"
+            style={{ borderColor: "var(--line)" }}
+          >
+            <Download size={14} />
+            Export CSV
+          </button>
+        )}
+      </div>
 
       <div className="flex flex-wrap items-center gap-2 mb-6">
         {TABS.map((t) => (
@@ -106,7 +157,8 @@ export default function AdminLeads() {
       </div>
 
       {error && <p className="text-sm text-red-500 mb-4">{error}</p>}
-      {leads === null && !error && <p className="text-sm text-[var(--fg-muted)]">Loading…</p>}
+      {user && TABS.length === 0 && <p className="text-sm text-[var(--fg-muted)]">You don't have access to any leads sections.</p>}
+      {leads === null && !error && tab && <p className="text-sm text-[var(--fg-muted)]">Loading…</p>}
       {leads?.length === 0 && <p className="text-sm text-[var(--fg-muted)]">No {tab === "contact" ? "consultation requests" : "internship applications"} yet.</p>}
       {leads?.length > 0 && visibleLeads.length === 0 && (
         <p className="text-sm text-[var(--fg-muted)]">No candidates the AI flagged as a strong fit yet.</p>

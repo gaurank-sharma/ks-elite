@@ -53,6 +53,18 @@ export async function login(username, password) {
   return data.token;
 }
 
+// ── current user / staff management ─────────────────────────────────────
+export const getMe = () => request("/admin/auth/me");
+export const getSections = () => request("/admin/auth/sections");
+export const getAdminUsers = () => request("/admin/auth/users");
+export const createAdminUser = (payload) => request("/admin/auth/users", { method: "POST", body: JSON.stringify(payload) });
+export const updateAdminUser = (id, payload) => request(`/admin/auth/users/${id}`, { method: "PUT", body: JSON.stringify(payload) });
+export const deleteAdminUser = (id) => request(`/admin/auth/users/${id}`, { method: "DELETE" });
+
+// ── subscribers ──────────────────────────────────────────────────────────
+export const getSubscribers = () => request("/subscribers");
+export const deleteSubscriber = (id) => request(`/subscribers/${id}`, { method: "DELETE" });
+
 // ── leads ────────────────────────────────────────────────────────────────
 export const getContacts = () => request("/contact");
 export const getInternships = () => request("/internship");

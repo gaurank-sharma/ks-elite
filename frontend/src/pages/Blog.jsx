@@ -5,6 +5,7 @@ import Layout from "../components/Layout";
 import PageHeader from "../components/PageHeader";
 import Reveal from "../components/Reveal";
 import { fetchPublishedPosts, resolveImageUrl } from "../lib/api";
+import NewsletterSubscribe from "../components/NewsletterSubscribe";
 
 const CATEGORY_IMAGES = {
   Technology: "/images/blog/technology.jpg",
@@ -133,6 +134,8 @@ export default function Blog() {
               </div>
             </>
           )}
+
+          <NewsletterSubscribe />
         </div>
       </section>
     </Layout>

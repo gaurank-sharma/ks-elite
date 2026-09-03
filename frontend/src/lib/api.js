@@ -58,3 +58,16 @@ export async function fetchTestimonials() {
   if (!res.ok) throw new Error("Failed to load testimonials.");
   return res.json();
 }
+
+// Unlike submitLead/submitInternshipApplication, there's no WhatsApp fallback
+// for a newsletter signup — the visitor needs real success/error feedback.
+export async function subscribeToNewsletter(email) {
+  const res = await fetch(`${API_BASE}/subscribers`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email }),
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(data.error || "Something went wrong.");
+  return data;
+}
